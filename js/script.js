@@ -1,7 +1,7 @@
 const board = document.querySelector("div.board");
 const keyboard = document.querySelector("div.keyboard");
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const words = ["STAUB", "HOSEN", "MINUS", "STUHL", "MILCH", "GOLEM", "PROBE", "GENAU", "REGAL", "LAGER", "NAGEL", "BRUCH", "BENJI", "KNOPF", "FADEN", "MOTEL", "HILFE", "OPFER", "MONAT"];
+const words = ["STAUB", "HOSEN", "MINUS", "STUHL", "MILCH", "GOLEM", "PROBE", "GENAU", "REGAL", "LAGER", "NAGEL", "BRUCH", "BENJI", "KNOPF", "FADEN", "MOTEL", "HILFE", "OPFER", "MONAT", "ZEBRA", "LOKAL", "PLATT", "AUGEN", "ZEUGE", "SOCKE", "BLUME", "SPIEL", "FAXEN" ];
 let rows = [];
 let gameover = true;
 
@@ -232,10 +232,11 @@ function reset() {
     rows = [];
 }
 
+let word;
 function startGame() {
     reset();
     gameover = false;
-    let word = words[Math.floor(Math.random()*words.length)];
+    word = words[Math.floor(Math.random()*words.length)];
     console.log(word);
     setup(word);
     for (let i = 0; i < 6; i++) {
@@ -243,6 +244,20 @@ function startGame() {
         row.update();
         rows.push(row);
     } 
+    document.removeEventListener("keypress", keyPress);
+    document.addEventListener("keypress", keyPress);
+    
+}
+
+function keyPress(e) {
+    console.log(e);
+    if (e.key == "Enter") {
+        goBack();
+    } else {
+        let letter = e.code.charAt(e.code.length-1);
+        setLetter(letter, word);
+    }
+    
 }
 
 startGame();
